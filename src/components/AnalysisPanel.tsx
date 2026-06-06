@@ -26,7 +26,7 @@ export function AnalysisPanel() {
   }
 
   return (
-    <aside className={styles.panel}>
+    <aside data-tutorial="analysis-panel" className={styles.panel}>
       <h2 className={styles.heading}>Analysis</h2>
 
       {/* Hand size toggle */}
@@ -103,6 +103,7 @@ export function AnalysisPanel() {
           <h3 className={styles.subheading}>Queries</h3>
           {!buildingQuery && (
             <button
+              data-tutorial="new-query-btn"
               className={styles.addBtn}
               onClick={() => { setBuildingQuery(true); setEditingQueryId(null) }}
               disabled={deck.categories.length === 0}

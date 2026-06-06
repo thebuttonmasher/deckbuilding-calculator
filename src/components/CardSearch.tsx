@@ -50,7 +50,7 @@ export function CardSearch() {
   }
 
   return (
-    <aside className={styles.panel}>
+    <aside data-tutorial="card-search" className={styles.panel}>
       <div className={styles.searchRow}>
         <input
           className={styles.input}

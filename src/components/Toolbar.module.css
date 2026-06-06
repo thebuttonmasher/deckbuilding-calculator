@@ -115,6 +115,24 @@
 }
 .dropDelete:hover { color: #ef5350; }
 
+.helpBtn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.1s, color 0.1s;
+}
+.helpBtn:hover { background: var(--surface-4); color: var(--text); }
+
 .categoryOverlay {
   position: absolute;
   top: calc(100% + 4px);

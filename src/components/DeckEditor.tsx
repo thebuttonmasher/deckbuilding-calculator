@@ -31,7 +31,7 @@ export function DeckEditor() {
   }, [deck.mainDeck, deck.extraDeck, deck.sideDeck])
 
   return (
-    <div className={styles.editor}>
+    <div data-tutorial="deck-editor" className={styles.editor}>
       <DeckZone
         zone="main"
         title="Main Deck"

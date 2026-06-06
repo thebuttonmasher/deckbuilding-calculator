@@ -3,7 +3,11 @@ import { useDeckStore } from '../store/deckStore'
 import { CategoryManager } from './CategoryManager'
 import styles from './Toolbar.module.css'
 
-export function Toolbar() {
+interface ToolbarProps {
+  onOpenTutorial: () => void
+}
+
+export function Toolbar({ onOpenTutorial }: ToolbarProps) {
   const {
     deck, savedDecks,
     newDeck, renameDeck, persistDeck, loadDeckById, deleteDeckById,
@@ -64,7 +68,11 @@ export function Toolbar() {
       </div>
 
       <div className={styles.right}>
-        <button className={styles.btn} onClick={() => setShowCategories((v) => !v)}>
+        <button
+          data-tutorial="categories-btn"
+          className={styles.btn}
+          onClick={() => setShowCategories((v) => !v)}
+        >
           Categories
         </button>
 
@@ -101,6 +109,8 @@ export function Toolbar() {
         <input ref={fileRef} type="file" accept=".ydk" style={{ display: 'none' }} onChange={handleImport} />
 
         <button className={styles.btn} onClick={handleExport}>Export .ydk</button>
+
+        <button className={styles.helpBtn} onClick={onOpenTutorial} title="Open tutorial">?</button>
       </div>
 
       {showCategories && (
