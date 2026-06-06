@@ -1,0 +1,7 @@
+export { comb } from './combinatorics'
+export { decompose } from './atoms'
+export type { Atom } from './atoms'
+export type { QueryNode, Comparator } from './query'
+export { evaluateQuery, getQueryCategories } from './query'
+export { analyze } from './analysis'
+export type { AnalysisResult, CategoryDistribution, QueryResult } from './analysis'

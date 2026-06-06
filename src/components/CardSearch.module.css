@@ -1,0 +1,111 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: 12px;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border);
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.searchRow {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 32px 8px 10px;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+.input::placeholder { color: var(--muted); }
+.input:focus { outline: none; border-color: var(--accent); }
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+.results {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--surface-2);
+  border: 1px solid transparent;
+  transition: border-color 0.1s;
+}
+.result:hover { border-color: var(--accent); }
+
+.thumb {
+  width: 32px;
+  height: auto;
+  border-radius: 3px;
+  flex-shrink: 0;
+  background: #333;
+}
+
+.resultInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resultName {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultType {
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zoneBadge {
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.main { background: #1a3a1a; color: #4caf50; }
+.extra { background: #1a1a3a; color: #7986cb; }
+
+.error { color: #ef5350; font-size: 12px; padding: 4px 0; }
+.empty { color: var(--muted); font-size: 12px; text-align: center; padding: 20px 0; }
