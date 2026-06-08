@@ -4,10 +4,14 @@ import { CardSearch } from './components/CardSearch'
 import { DeckEditor } from './components/DeckEditor'
 import { AnalysisPanel } from './components/AnalysisPanel'
 import { Tutorial } from './components/Tutorial'
+import { MobileNav, type MobileTab } from './components/MobileNav'
+import { useIsMobile } from './hooks/useIsMobile'
 import styles from './App.module.css'
 
 export default function App() {
   const [tutorialOpen, setTutorialOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<MobileTab>('deck')
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (!localStorage.getItem('tutorialSeen')) {
@@ -23,12 +27,18 @@ export default function App() {
   return (
     <div className={styles.app}>
       <Toolbar onOpenTutorial={() => setTutorialOpen(true)} />
-      <div className={styles.body}>
-        <CardSearch />
-        <DeckEditor />
-        <AnalysisPanel />
+      <div className={`${styles.body} ${isMobile ? styles.bodyMobile : ''}`}>
+        {(!isMobile || activeTab === 'search') && <CardSearch />}
+        {(!isMobile || activeTab === 'deck') && <DeckEditor />}
+        {(!isMobile || activeTab === 'analysis') && <AnalysisPanel />}
       </div>
-      {tutorialOpen && <Tutorial onDone={handleTutorialDone} />}
+      {isMobile && <MobileNav activeTab={activeTab} onChange={setActiveTab} />}
+      {tutorialOpen && (
+        <Tutorial
+          onDone={handleTutorialDone}
+          onTabChange={isMobile ? setActiveTab : undefined}
+        />
+      )}
     </div>
   )
 }

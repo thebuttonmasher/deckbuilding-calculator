@@ -21,6 +21,7 @@ export function CardSearch() {
   const [results, setResults] = useState<YGOCard[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [toast, setToast] = useState<string | null>(null)
   const { addCard } = useDeckStore()
 
   const doSearch = useCallback(async (q: string) => {
@@ -47,6 +48,8 @@ export function CardSearch() {
   function handleAdd(card: YGOCard) {
     const zone = isExtraDeckType(card.type) ? 'extra' : 'main'
     addCard(card.id, zone)
+    setToast(`Added to ${zone} deck`)
+    setTimeout(() => setToast(null), 1800)
   }
 
   return (
@@ -59,6 +62,8 @@ export function CardSearch() {
           value={query}
           onChange={(e) => handleInput(e.target.value)}
           spellCheck={false}
+          autoComplete="off"
+          inputMode="search"
         />
         {loading && <span className={styles.spinner} />}
       </div>
@@ -73,6 +78,7 @@ export function CardSearch() {
           <p className={styles.empty}>No cards found</p>
         )}
       </div>
+      {toast && <div className={styles.toast}>{toast}</div>}
     </aside>
   )
 }

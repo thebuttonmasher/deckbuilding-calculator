@@ -7,3 +7,10 @@
   padding: 16px;
   min-width: 0;
 }
+
+@media (max-width: 768px) {
+  .editor {
+    padding: 12px;
+    gap: 12px;
+  }
+}

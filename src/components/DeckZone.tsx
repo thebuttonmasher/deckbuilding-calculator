@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { DeckZone as ZoneType, YGOCard } from '../types'
 import { useDeckStore } from '../store/deckStore'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { CardTile } from './CardTile'
 import { CardModal } from './CardModal'
 import styles from './DeckZone.module.css'
@@ -16,6 +17,7 @@ interface Props {
 export function DeckZone({ zone, title, min, max, cardMap }: Props) {
   const { deck, addCard, removeCard } = useDeckStore()
   const [openCard, setOpenCard] = useState<YGOCard | null>(null)
+  const isMobile = useIsMobile()
 
   const key = zone === 'main' ? 'mainDeck' : zone === 'extra' ? 'extraDeck' : 'sideDeck'
   const deckCards = deck[key]
@@ -47,8 +49,8 @@ export function DeckZone({ zone, title, min, max, cardMap }: Props) {
 
       <div
         className={`${styles.grid} ${isEmpty ? styles.dropTarget : ''}`}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
+        onDrop={!isMobile ? handleDrop : undefined}
+        onDragOver={!isMobile ? handleDragOver : undefined}
       >
         {deckCards.map((dc) => {
           const card = cardMap.get(dc.cardId)
@@ -56,8 +58,8 @@ export function DeckZone({ zone, title, min, max, cardMap }: Props) {
           return (
             <div
               key={dc.cardId}
-              draggable
-              onDragStart={(e) => e.dataTransfer.setData('cardId', String(dc.cardId))}
+              draggable={!isMobile}
+              onDragStart={!isMobile ? (e) => e.dataTransfer.setData('cardId', String(dc.cardId)) : undefined}
             >
               <CardTile
                 card={card}
