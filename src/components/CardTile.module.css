@@ -94,3 +94,14 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .qtyControls {
+    display: flex;
+  }
+  .qtyBtn {
+    width: 22px;
+    height: 22px;
+    font-size: 15px;
+  }
+}

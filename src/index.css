@@ -41,3 +41,12 @@ select option {
   background: var(--surface-2);
   color: var(--text);
 }
+
+html {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar { width: 0; height: 0; }
+}

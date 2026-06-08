@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
+import type { MobileTab } from './MobileNav'
 import styles from './Tutorial.module.css'
 
 type Prefer = 'top' | 'bottom' | 'left' | 'right' | 'center'
@@ -9,6 +10,7 @@ type Step = {
   body: string
   target: string | null
   prefer?: Prefer
+  tab?: MobileTab
 }
 
 const STEPS: Step[] = [
@@ -22,12 +24,14 @@ const STEPS: Step[] = [
     body: "Type a card name here to search. Results appear instantly — click any result to add it to your deck.",
     target: 'card-search',
     prefer: 'right',
+    tab: 'search',
   },
   {
     title: 'Your deck zones',
     body: "Your deck is split into Main (40–60), Extra (0–15), and Side (0–15). Cards auto-route to the right zone.",
     target: 'deck-editor',
     prefer: 'center',
+    tab: 'deck',
   },
   {
     title: 'Adjust quantities',
@@ -50,20 +54,23 @@ const STEPS: Step[] = [
     body: "The analysis panel shows the probability of drawing each category in your opening hand — updated live as you edit.",
     target: 'analysis-panel',
     prefer: 'left',
+    tab: 'analysis',
   },
   {
     title: 'Build a query',
     body: "Queries let you ask specific questions — like 'at least 1 Starter AND 1 Hand Trap'. Save them and track exact combo odds.",
     target: 'new-query-btn',
     prefer: 'left',
+    tab: 'analysis',
   },
 ]
 
 interface TutorialProps {
   onDone: () => void
+  onTabChange?: (tab: MobileTab) => void
 }
 
-export function Tutorial({ onDone }: TutorialProps) {
+export function Tutorial({ onDone, onTabChange }: TutorialProps) {
   const [step, setStep] = useState(0)
   const [rect, setRect] = useState<DOMRect | null>(null)
   const stepRef = useRef(step)
@@ -89,23 +96,37 @@ export function Tutorial({ onDone }: TutorialProps) {
         onDone()
       } else if (e.key === 'ArrowRight') {
         e.preventDefault()
-        if (stepRef.current < STEPS.length - 1) setStep((s) => s + 1)
-        else onDone()
+        if (stepRef.current < STEPS.length - 1) {
+          const next = stepRef.current + 1
+          if (STEPS[next].tab && onTabChange) onTabChange(STEPS[next].tab!)
+          setStep(next)
+        } else {
+          onDone()
+        }
       } else if (e.key === 'ArrowLeft') {
-        setStep((s) => Math.max(0, s - 1))
+        const prev = Math.max(0, stepRef.current - 1)
+        if (STEPS[prev].tab && onTabChange) onTabChange(STEPS[prev].tab!)
+        setStep(prev)
       }
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [onDone])
+  }, [onDone, onTabChange])
 
   function goNext() {
-    if (step < STEPS.length - 1) setStep((s) => s + 1)
-    else onDone()
+    if (step < STEPS.length - 1) {
+      const next = step + 1
+      if (STEPS[next].tab && onTabChange) onTabChange(STEPS[next].tab!)
+      setStep(next)
+    } else {
+      onDone()
+    }
   }
 
   function goBack() {
-    setStep((s) => Math.max(0, s - 1))
+    const prev = Math.max(0, step - 1)
+    if (STEPS[prev].tab && onTabChange) onTabChange(STEPS[prev].tab!)
+    setStep(prev)
   }
 
   const PAD = 8

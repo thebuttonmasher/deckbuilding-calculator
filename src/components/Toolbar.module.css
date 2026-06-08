@@ -142,3 +142,26 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   border-radius: 10px;
 }
+
+.dropAction {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dropAction:hover { background: var(--surface-3); }
+
+@media (max-width: 768px) {
+  .logo { display: none; }
+  .deckName { max-width: 130px; }
+  .nameInput { width: 130px; }
+  .toolbar { padding: 0 10px; }
+}

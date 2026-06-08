@@ -144,3 +144,16 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
+
+@media (max-width: 768px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal {
+    border-radius: 16px 16px 0 0;
+    max-height: 85vh;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    overscroll-behavior: contain;
+  }
+}

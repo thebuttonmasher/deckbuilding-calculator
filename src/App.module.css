@@ -11,3 +11,9 @@
   overflow: hidden;
   min-height: 0;
 }
+
+.bodyMobile {
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: calc(56px + env(safe-area-inset-bottom));
+}
